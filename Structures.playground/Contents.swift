@@ -87,3 +87,27 @@ mutableCar.currentSpeed
 //and check the speed of the copy we will see different results
 copy.currentSpeed
 
+//we saw that we can copy data from an instance to another
+//but what happens if i want to change something interrnally? to create a custom copy
+
+struct Bike {
+    let manufacturer: String
+    let currentSpeed: Int
+    
+    //in order to chage the speed
+    func copy(currentSpeed: Int) -> Bike {
+        Bike(manufacturer: self.manufacturer, currentSpeed: currentSpeed)
+    }
+    
+}
+//we create a first instance of the bike
+let bike1 = Bike(manufacturer: "HD", currentSpeed: 20)
+//and we asign the value to another instance , but we wan't to chage the speed
+//we can't but then you will be tempted to chage let with var
+//let bike2 = bike1
+//bike2.currentSpeed = 30
+
+//a more preferred way is to create a function -> see inisde the struct declaration
+let bike2 = bike1.copy(currentSpeed: 30)
+bike1.currentSpeed
+bike2.currentSpeed
