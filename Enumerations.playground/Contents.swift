@@ -190,3 +190,4 @@ var myHeight = Height.medium
 //change the value
 myHeight.makeLong()
 myHeight
+
