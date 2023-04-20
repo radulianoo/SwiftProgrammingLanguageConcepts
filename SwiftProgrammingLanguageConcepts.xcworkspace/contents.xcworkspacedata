@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Initialization.playground">
+   </FileRef>
+   <FileRef
       location = "group:Async.playground">
    </FileRef>
    <FileRef
