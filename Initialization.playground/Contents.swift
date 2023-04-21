@@ -254,4 +254,119 @@ class Hoverboard: Vehicle99 {
 }
 
 let hoverboard = Hoverboard(color: "silver")
-print("Hoverboard: \(hoverboard.description)")
+//print("Hoverboard: \(hoverboard.description)")
+
+//designated and convenience inits in action
+
+class Food {
+    var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+    //convenience is delegating to the designated
+    convenience init() {
+        self.init(name: "Unnamed")
+    }
+}
+
+
+class RecipeIngredient: Food {
+    
+    var quantity: Int
+    
+    init(name: String, quantity:Int) {
+        self.quantity = quantity
+        //the convenience is delegating up to superclass
+        //fot the initialization of the inherited property
+        super.init(name: name)
+    }
+    
+    //it is override because is taking the same parameters as the designated init from food class
+    override convenience init(name: String) {
+        //delegates across and assumes that each ingredient without any specified value is 1
+        self.init(name: name, quantity: 1)
+    }
+    
+}
+
+let oneMisteryItem = RecipeIngredient()
+oneMisteryItem.name
+
+let bacon = RecipeIngredient(name: "Bacon")
+bacon.quantity
+bacon.name
+
+let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
+
+
+class ShoppingItemsToBePurchased: RecipeIngredient {
+    var purchased = false
+    
+    var description: String {
+        var output = "\(quantity) x \(name)"
+        output += purchased ? " ✔" : " ✘"
+        return output
+    }
+}
+
+let list1 = ShoppingItemsToBePurchased()
+list1.purchased = true
+list1.name = "Banana"
+list1.quantity = 2
+list1.description
+
+var breakfastList = [ ShoppingItemsToBePurchased(), ShoppingItemsToBePurchased(name: "Bacon"), ShoppingItemsToBePurchased(name: "Eggs", quantity: 24)]
+
+breakfastList[0].name = "Orange Juice"
+breakfastList[0].purchased = true
+for item in breakfastList {
+    print(item.description)
+}
+
+
+//failable initializers
+
+struct Animal {
+    let species: String
+    init?(species: String) {
+        if species.isEmpty {return nil}
+        self.species = species
+    }
+}
+
+
+let anonymusCreature = Animal(species: "")
+
+if anonymusCreature == nil {
+    print("This object couldn't ne initialized")
+}
+
+
+//required initializers
+
+class SomeClass {
+    required init() {
+        //initializer implementation goes here
+    }
+}
+
+class SomeSubclass: SomeClass {
+    required init() {
+        //subclass implementation of the required initializer goes here
+    }
+}
+
+
+//setting a default property value with a closure or function
+
+class SomeOtherClass {
+    
+    let someProperty: Bool = {
+       let someValue = false
+        return someValue
+    }()
+    //the empty parentheses tells swift to execute the closure immediately
+    //if we omit these parentheses we are trying to assign the closure itself to the property -> and not the return value
+    
+}
